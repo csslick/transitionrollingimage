@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>이미지 순환</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<style>
+		h1{ 
+			font-family: sans-serif;
+			font-weight: normal;
+		}
+		.slider{
+			position: relative;
+			border: 2px solid red;
+			width: 600px; height: 350px;
+		}
+		.slider img{
+			position: absolute;
+			left: 0; top: 0;
+			display: block;
+		}
+		
+		.indicator{
+			position: absolute;
+			width: 160px;
+			left: 50%; margin-left: -80px; 
+			bottom: 10px;
+		}
+		.indicator > a{ 
+			color: white;
+			background: #666;
+			display: inline-block;
+			padding: 3px;
+			text-decoration: none;
+		}
+		.indicator > a.on{
+			background: #fff; color: #000;
+		}
+	</style>
+</head>
+<body>
+	<h1>Transition Rolling Image</h1>
+	<div class="slider">
+		<img src="img001.jpg" alt="1">
+		<img src="img002.jpg" alt="2">
+		<img src="img003.jpg" alt="3">
+		<img src="img004.jpg" alt="4">
+		
+		<ul class="indicator">
+			<a href="#">1</a>
+			<a href="#">2</a>
+			<a href="#">3</a>
+			<a href="#">4</a>
+		</ul>
+	</div>
+	
+	<script>
+		$(function(){
+			var img_num = 0;
+			$('.slider > img')
+				.css('transition', '1s');
+
+			$('.indicator a').removeClass('on');
+			$('.indicator a').eq(img_num).addClass('on');
+			
+			setInterval(function(){
+								
+				$('.slider > img')
+					.css('opacity', '0');
+				
+				$('.slider > img')
+					.eq(img_num)
+					.css('opacity', '1');
+				
+				if(img_num < 3){
+					img_num++;			
+				} else { img_num = 0;}
+				
+				// update indicator
+				$('.indicator a').removeClass('on');
+				$('.indicator a').eq(img_num).addClass('on');										
+			}, 3000);
+						
+		}); // end $()
+	</script>
+	
+	
+</body>
+</html>
