@@ -2,39 +2,41 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>이미지 순환</title>
+	<title>이미지 전환 롤링 효과</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<style>
-		h1{ 
+		h1{
 			font-family: sans-serif;
 			font-weight: normal;
 		}
 		.slider{
 			position: relative;
-			border: 2px solid red;
+/*			border: 2px solid red;*/
 			width: 600px; height: 350px;
 		}
-		.slider img{
+		.slider > img{
 			position: absolute;
 			left: 0; top: 0;
-			display: block;
 		}
-		
+			
 		.indicator{
 			position: absolute;
-			width: 160px;
-			left: 50%; margin-left: -80px; 
+/*			border: 1px solid red;*/
+			text-align: center;
+			width: 100px;
+			left: 50%;
+			margin-left: -50px;
 			bottom: 10px;
 		}
-		.indicator > a{ 
-			color: white;
+		.indicator > a{
+			width: 10px; height: 10px;
 			background: #666;
 			display: inline-block;
-			padding: 3px;
 			text-decoration: none;
+			border-radius: 50%;
 		}
 		.indicator > a.on{
-			background: #fff; color: #000;
+			background: #eee;
 		}
 	</style>
 </head>
@@ -46,43 +48,60 @@
 		<img src="img003.jpg" alt="3">
 		<img src="img004.jpg" alt="4">
 		
-		<ul class="indicator">
-			<a href="#">1</a>
-			<a href="#">2</a>
-			<a href="#">3</a>
-			<a href="#">4</a>
-		</ul>
+		<div class="indicator">
+			<a href="#"></a>
+			<a href="#"></a>
+			<a href="#"></a>
+			<a href="#"></a>
+		</div>
 	</div>
 	
 	<script>
+		
 		$(function(){
-			var img_num = 0;
-			$('.slider > img')
-				.css('transition', '1s');
-
+			// 이미지 번호 변수
+			var img_num = 0;			// 이미지 번호 변수
+			var duration = 3000;	// 재생시간 변수
+			
+			// 트랜지션 효과 설정
+			$('.slider > img').css('transition', '1s');
+			
+			// 인디케이터 초기화
 			$('.indicator a').removeClass('on');
+			
+			// 현재 이미지 번호의 인디케이터를 켠다.
 			$('.indicator a').eq(img_num).addClass('on');
 			
 			setInterval(function(){
-								
-				$('.slider > img')
-					.css('opacity', '0');
 				
+				// 이미지 뷰 초기화
+				$('.slider > img').css('opacity', 0);
+
 				$('.slider > img')
-					.eq(img_num)
-					.css('opacity', '1');
+					.eq(img_num)	// 이미지 순서
+					.css('opacity', 1);	// 스타일
 				
+				// 이미지가 마지막이면 처음으로
 				if(img_num < 3){
-					img_num++;			
-				} else { img_num = 0;}
-				
-				// update indicator
+					img_num++;
+					console.log(img_num);					
+				} else{
+					// 처음 이미지로
+					img_num = 0;
+				}
+	
+				// 인디케이터 업데이트
 				$('.indicator a').removeClass('on');
-				$('.indicator a').eq(img_num).addClass('on');										
-			}, 3000);
-						
-		}); // end $()
+				$('.indicator a').eq(img_num).addClass('on');					
+			}, duration);
+			
+		});	// $()
+		
 	</script>
+	
+	
+	
+	
 	
 	
 </body>
